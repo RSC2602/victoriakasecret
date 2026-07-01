@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yesyesyes😰</title>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Josefin Slab', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #eee;
+            margin: 0;
+            transition: background-color 1s ease-in-out;
+        }
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ad3907;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #012e5f;
+        }
+        #message {
+            color: rgb(220, 19, 19);
+            margin-top: 10px;
+            min-height: 1.2em;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .shake-animation {
+            animation: shake 0.4s;
+        }
+        #hint {
+            color: #05359d;
+        }
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #ffe4e1 0%, #ffb3c6 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeInOverlay 1s ease-in-out forwards;
+        }
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #loadingOverlay.fade-out {
+            animation: fadeOutOverlay 1s ease-in-out forwards;
+        }
+        @keyframes fadeOutOverlay {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        #loadingOverlay h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            font-family: 'Josefin Slab', serif;
+            text-shadow: 2px 2px 4px rgba(255, 71, 126, 0.8), 0 0 10px #ffb3c6;
+            margin-top: 20px;
+            animation: pulseText 1.5s infinite ease-in-out;
+        }
+        @keyframes pulseText {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .music-note {
+            position: fixed;
+            bottom: -50px;
+            z-index: 10000;
+            pointer-events: none;
+            animation: floatNote 4s linear forwards;
+        }
+        @keyframes floatNote {
+            0% { transform: translateY(0) rotate(-20deg); opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>Prove that its you bitch🥰💔</h1>
+        <h3 id="hint">(Hint - enter your OG nickname)</h3>
+        <h4>Keep your volume on or use headphones!</h4>
+        <br>
+        <input type="password" id="passwordInput" placeholder="Enter Code(small letters)">
+        <br>
+        <button onclick="checkPassword()">Verify</button>
+        <div id="message"></div>
+    </div>
+    
+    <div id="loadingOverlay">
+        <div id="gifContainerTop" style="width: 70%; max-width: 400px; margin-bottom: 20px; opacity: 0; animation: fadeInOverlay 1.5s ease-in-out forwards;">
+            <div class="tenor-gif-embed" data-postid="6913668850567682201" data-share-method="host" data-aspect-ratio="3.20779" data-width="100%"><a href="https://tenor.com/view/tungtung-tungtung-sahur-tungsahur-tung-tung-tung-tung-sahur-tung-gif-6913668850567682201">Tungtung Tungtung Sahur Sticker</a>from <a href="https://tenor.com/search/tungtung-stickers">Tungtung Stickers</a></div>
+        </div>
+        <h1>HIII MRS MAGIC TWINN, let me cook now🔥</h1>
+        <div id="gifContainer" style="width: 70%; max-width: 400px; margin-top: 20px; opacity: 0; animation: fadeInOverlay 1.5s ease-in-out forwards;">
+            <div class="tenor-gif-embed" data-postid="6913668850567682201" data-share-method="host" data-aspect-ratio="3.20779" data-width="100%"><a href="https://tenor.com/view/tungtung-tungtung-sahur-tungsahur-tung-tung-tung-tung-sahur-tung-gif-6913668850567682201">Tungtung Tungtung Sahur Sticker</a>from <a href="https://tenor.com/search/tungtung-stickers">Tungtung Stickers</a></div>
+        </div>
+    </div>
+
+    <audio id="loadingAudio" src="magic.mp3" preload="auto"></audio>
+
+    <script>
+        var failedAttempts = 0;
+        var failMessages = [
+            "Skill issue, try again",
+            "Nope. Try harder VRO.",
+            "Are you sure you're the right person?",
+            "WAOW did you forget your own nickname?",
+            "I have all day, but this is embarrassing.",
+            "Is your keyboard broken?",
+            "Okay, I'm just going to judge you silently now."
+        ];
+
+        function checkPassword() {
+            var input = document.getElementById("passwordInput");
+            var message = document.getElementById("message");
+            if (input.value === "kaleshwita") {
+                document.querySelector('.login-box').style.display = 'none';
+                document.getElementById('loadingOverlay').style.display = 'flex';
+                
+                var audio = document.getElementById("loadingAudio");
+                var currentVol = 0;
+                audio.volume = currentVol;
+                audio.play().catch(function(e) { console.log("Audio play blocked", e); });
+                
+                var fadeInInterval = setInterval(function () {
+                    if (currentVol < 0.9) {
+                        currentVol = Math.min(1, currentVol + 0.1);
+                        audio.volume = currentVol;
+                    } else {
+                        audio.volume = 1;
+                        clearInterval(fadeInInterval);
+                    }
+                }, 100); // Increases volume by 0.1 every 100ms (1-second fade)
+
+                setTimeout(function() {
+                    document.getElementById('loadingOverlay').classList.add('fade-out');
+                    document.body.style.backgroundColor = "black";
+
+                    var noteInterval = setInterval(function() {
+                        var note = document.createElement("div");
+                        note.className = "music-note";
+                        note.innerHTML = Math.random() > 0.5 ? "&#9834;" : "&#9835;"; // Randomly pick ♪ or ♫
+                        note.style.left = Math.random() * 100 + "vw";
+                        note.style.fontSize = (Math.random() * 2 + 1.5) + "rem";
+                        var colors = ["#ffb3c6", "#ff477e", "#ffe4e1", "#ffffff"];
+                        note.style.color = colors[Math.floor(Math.random() * colors.length)];
+                        note.style.animationDuration = (Math.random() * 2 + 3) + "s";
+                        document.body.appendChild(note);
+                        setTimeout(function() { note.remove(); }, 5000);
+                    }, 250); // Create a new note every 250ms
+
+                    setTimeout(function() { clearInterval(noteInterval); }, 5600); // Stop making notes right before redirect
+                }, 4800); // Fade out the loading screen early
+
+                setTimeout(function() {
+                    var fadeOutInterval = setInterval(function () {
+                        if (audio.volume > 0.1) {
+                            audio.volume = Math.max(0, audio.volume - 0.1);
+                        } else {
+                            audio.volume = 0;
+                            clearInterval(fadeOutInterval);
+                        }
+                    }, 100);
+                }, 9000); // Fade out the audio right before the 9.5-second mark
+
+                setTimeout(function() {
+                    window.location.href = "ok.html?auth=1";
+                }, 9500); // Wait until 9.5 seconds to redirect to the next page
+            } else {
+                var msgIndex = Math.min(failedAttempts, failMessages.length - 1);
+                message.innerText = failMessages[msgIndex];
+                failedAttempts++;
+                message.classList.remove("shake-animation");
+                void message.offsetWidth; // Trigger reflow to restart animation
+                message.classList.add("shake-animation");
+                input.value = "";
+                input.focus();
+            }
+        }
+
+        document.getElementById("passwordInput").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
+    </script>
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+</body>
+</html>

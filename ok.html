@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description"/>
+		<title>nononono‼️</title>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .heart {
+                position: fixed;
+                bottom: -50px;
+                width: 20px;
+                height: 20px;
+                background: #c02472;
+                transform: rotate(45deg);
+                z-index: 10000;
+                animation: floatUp 5s linear forwards;
+            }
+            .heart::before, .heart::after {
+                content: "";
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background: #981557;
+                border-radius: 50%;
+            }
+            .heart::before { top: -10px; left: 0; }
+            .heart::after { left: -10px; top: 0; }
+            @keyframes floatUp {
+                to { bottom: 110vh; opacity: 0; }
+            }
+            #foundText {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 51.5%;
+                transform: translateX(-50%);
+                font-size: 2.7rem;
+                font-weight: bold;
+                color: midnightblue;
+                text-shadow: 3px 3px 0 #fff;
+                z-index: 10001;
+                text-align: center;
+                width: 100%;
+            }
+            #foundText2 {
+                display: none;
+                position: fixed;
+                top: 60%;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 1.7rem;
+                font-weight: bold;
+                color: maroon;
+                text-shadow: 3px 3px 0 #fff;
+                z-index: 10001;
+                text-align: center;
+                width: 100%;
+            }
+            #foundDialog {
+                display: none;
+                position: fixed;
+                top: 80%;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 10002;
+                height: auto;
+                min-height: 0;
+                padding: 10px 15px;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                background: rgba(255, 255, 255, 0.4);
+                backdrop-filter: blur(8px);
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.5);
+            }
+            #goAgainBtn, #seeMoreBtn {
+                font-size: 1rem;
+                padding: 10px 15px;
+                white-space: nowrap;
+                text-align: center;
+            }
+            #seeMoreBtn {
+                background-color: orange;
+                color: white;
+                font-size: 1rem;
+                padding: 10px 40px;
+                width: max-content;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: pulseSeeMore 2s infinite ease-in-out;
+        }
+        @keyframes pulseSeeMore {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(255, 165, 0, 0.6); }
+            }
+            #fadeOverlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                z-index: 999999;
+            opacity: 1;
+                pointer-events: none;
+                transition: opacity 1s ease-in-out;
+            }
+            .found-bg {
+                background: linear-gradient(-45deg, #f9c0b0, #f4b3f4, #f1888c, #e180c2, #b25b98);
+                background-size: 400% 400%;
+                animation: gradientBG 5s ease infinite;
+            }
+            @keyframes gradientBG {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+        #goBtn {
+            animation: pulseGo 2s infinite ease-in-out;
+        }
+        @keyframes pulseGo {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 120, 231, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 15px 5px rgba(0, 120, 231, 0.4); }
+        }
+        </style>
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=934096680060269";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+        <!-- Twitter SDK -->
+        <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+
+        return t;
+        }(document, "script", "twitter-wjs"));</script>
+
+        <!-- Google analytics -->
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-91771834-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+        
+
+        <!-- App -->
+        <div id="fadeOverlay"></div>
+        <div id="shade"></div>
+
+        <div id="flashlight"></div>
+        <div id="slothContainer">
+            <img id="sloth" src="rick_astley.png" onmouseover="slothMouseOver()" onmouseout="slothMouseOut()">
+        </div>
+        <div id="catContainer">
+            <img id="cat" src="cat-hat.jpg">
+        </div>
+        <audio id="foundMusic" loop preload="auto"><source src="no1.mp3" type="audio/mp3"></audio>
+        <h1 id="foundText">MERI PYAARI BKL KALESHIII, YOU FUCKING BITCH😝</h1>
+        <h2 id="foundText2">TUM MERI FAVOURITE HO, YOURE THE BESTESTEST🫂💞</h2>
+        <!-- Opening dialog -->
+        <div id="openingDialog" class="my-dialog">
+            <h1>I want you to click go to play a little game and find the missing cat</h1>
+            <h4>(Wait for this page to fully load first, dont click go until you see the "nononono" tab stop loading)</h4>
+            <button id="goBtn" class="pure-button pure-button-primary my-dialog-btn" onclick="goClick(event)" style="display: none;">Go</button>
+        </div>
+
+        <!-- Found Dialog -->
+        <div id="foundDialog" class="my-dialog">
+            <button id="goAgainBtn" class="pure-button my-dialog-btn" onclick="goAgainClick(event)">Replay?</button>
+            <button id="seeMoreBtn" class="pure-button my-dialog-btn" onclick="fadeOutAndNavigate()">Wanna see more?</button>
+        </div>
+        
+        <!-- JS libs -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+        <!-- My js -->
+        <!--<script src="js/app.js"></script>-->
+        <script src="main.js"></script>
+
+        <script>
+            setTimeout(function() {
+                document.getElementById('goBtn').style.display = 'inline-block';
+            }, 3000);
+            
+            // Smoothly fade in the page from black
+            setTimeout(function() {
+                document.getElementById('fadeOverlay').style.opacity = '0';
+            }, 100);
+
+            init();
+
+            function fadeOutAndNavigate() {
+                var overlay = document.getElementById('fadeOverlay');
+                overlay.style.opacity = '1';
+                overlay.style.pointerEvents = 'auto';
+                setTimeout(function() {
+                    window.location.href = 'okk.html?auth=1';
+                }, 1000);
+            }
+        </script>
+    </body>
+</html>
