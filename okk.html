@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADWI ( ͡° ͜ʖ ͡°)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+        }
+        #fadeInOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 999999;
+            animation: fadeOutOverlay 1s forwards;
+            pointer-events: none;
+        }
+        @keyframes fadeOutOverlay {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        #centerText, #centerText2, #centerText3, #centerText4, #centerText5 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+            font-family: sans-serif;
+            opacity: 0;
+        }
+        #centerText3, #centerText4, #centerText5 {
+            white-space: nowrap;
+        }
+        #centerText {
+            animation: fadeInOut 4s ease-in-out 1s forwards;
+        }
+        #centerText2 {
+            animation: fadeInOut 4s ease-in-out 5.5s forwards;
+        }
+        #centerText3 {
+            animation: typeIn 1.5s steps(30, end) 10s forwards, fadeOut 1s 15s forwards;
+        }
+        #centerText4 {
+            animation: typeIn 1.5s steps(30, end) 16.5s forwards, fadeOut 1s 21.5s forwards;
+        }
+        #centerText5 {
+            animation: typeIn 1.5s steps(30, end) 23s forwards, fadeOut 0.5s 27s forwards;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes typeIn {
+            from { clip-path: inset(0 100% 0 0); opacity: 1; }
+            to { clip-path: inset(0 0 0 0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        body.final-bg {
+            animation: changeBg 2s ease-in-out forwards;
+        }
+        @keyframes changeBg {
+            from { background-color: black; }
+            to { background-color: #ffe4e1; } /* Soft, warm pastel color */
+        }
+        .floating-heart {
+            position: fixed;
+            bottom: -50px;
+            width: 15px;
+            height: 15px;
+            background: #ff477e;
+            transform: rotate(-45deg);
+            z-index: 100005;
+        }
+        .floating-heart::before, .floating-heart::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #ff477e;
+            border-radius: 50%;
+        }
+        .floating-heart::before { top: -7.5px; left: 0; }
+        .floating-heart::after { left: 7.5px; top: 0; }
+        @keyframes floatUpHeart {
+            to { transform: translateY(-120vh) rotate(-45deg) scale(1.5); opacity: 0; }
+        }
+        .gallery {
+            position: absolute;
+            top: calc(37vh + 20px);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 1020px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 20;
+            height: 95vh; /* Set a height for the gallery */
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding: 30px; /* Add padding to prevent cutoff */
+            box-sizing: border-box;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .gallery::-webkit-scrollbar {
+            display: none; /* for Chrome, Safari, and Opera */
+        }
+        .polaroid {
+            position: relative;
+            background-color: white;
+            padding: 18px 12px 65px 12px;
+            border-radius: 2px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, z-index 0.3s;
+            cursor: pointer;
+        }
+        .polaroid img {
+            width: 200px;
+            max-width: 40vw;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .polaroid .caption {
+            position: absolute;
+            bottom: 15px;
+            left: 12px;
+            right: 12px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: #333;
+        }
+        .polaroid::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle at 35% 35%, #ffb3c6, #ff477e 40%, #b3003b);
+            border-radius: 50%;
+            box-shadow: 1px 3px 5px rgba(0,0,0,0.4), inset -1px -1px 3px rgba(0,0,0,0.3);
+            z-index: 5;
+        }
+        .polaroid:nth-child(odd)::before { top: 8px; left: 15px; right: auto; }
+        .polaroid:nth-child(even)::before { top: 6px; right: 15px; left: auto; }
+        .polaroid:nth-child(3n)::before { top: 11px; right: 25px; left: auto; }
+        .polaroid:nth-child(4n)::before { top: 7px; left: 22px; right: auto; }
+        .polaroid:nth-child(odd) { transform: rotate(-2deg); }
+        .polaroid:nth-child(even) { transform: rotate(2deg); }
+        .polaroid:hover {
+            transform: scale(1.15) rotate(0deg);
+            z-index: 25;
+            animation: sparkleHover 0.8s infinite alternate ease-in-out;
+        }
+        @keyframes sparkleHover {
+            0% { 
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 105, 180, 0.5); 
+                filter: brightness(1.1) contrast(1.05);
+            }
+            100% { 
+                box-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 105, 180, 0.9); 
+                filter: brightness(1.3) contrast(1.15);
+            }
+        }
+        .gallery.visible {
+            animation: fadeInGallery 3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes fadeInGallery {
+            0% { opacity: 0; visibility: visible; transform: translate(-50%, -50%) scale(0.8); filter: blur(15px); }
+            100% { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); filter: blur(0px); }
+        }
+        #gallery-heading {
+            flex-basis: 100%;
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            font-weight: normal;
+            font-style: normal;
+            color: #b3003b;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8), 0 0 15px #ffb3c6;
+            margin-bottom: 10px;
+            word-spacing: 15px;
+        }
+        .loading-more {
+            flex-basis: 100%;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 20px;
+        }
+        .burst-heart {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--c);
+            transform: translate(-50%, -50%) rotate(-45deg);
+            z-index: 99998;
+            opacity: 0;
+            pointer-events: none;
+            animation: burstHeartAnim 3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .burst-heart::before, .burst-heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--c);
+            border-radius: 50%;
+        }
+        .burst-heart::before { top: -10px; left: 0; }
+        .burst-heart::after { left: 10px; top: 0; }
+        @keyframes burstHeartAnim {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(-45deg); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(var(--scale)) rotate(calc(-45deg + var(--rot))); opacity: 0; }
+        }
+        #slideshowOverlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            z-index: 100000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        #slideContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform: scale(0.5);
+        }
+        #slideContent.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        #slideImg {
+            max-width: 85vw;
+            max-height: 65vh;
+            border: 8px solid white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(255,105,180, 0.6);
+            object-fit: contain;
+        }
+        #slideText {
+            color: #ffe4e1;
+            font-size: 1.4rem;
+            margin-top: 25px;
+            text-align: center;
+            font-family: sans-serif;
+            max-width: 80vw;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        #closeBtn {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            font-size: 50px;
+            color: white;
+            cursor: pointer;
+            z-index: 100001;
+            transition: color 0.3s, transform 0.3s, opacity 0.5s;
+        }
+        #closeBtn:hover {
+            color: #ff477e;
+            transform: scale(1.2);
+        }
+        .switch-heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #ff477e;
+            transform: rotate(-45deg);
+            z-index: 100002;
+            animation: explodeHeart 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            opacity: 0;
+        }
+        .switch-heart::before, .switch-heart::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #ff477e;
+            border-radius: 50%;
+        }
+        .switch-heart::before { top: -15px; left: 0; }
+        .switch-heart::after { left: 15px; top: 0; }
+        @keyframes explodeHeart {
+            0% { transform: scale(0.2) rotate(-45deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(-45deg); opacity: 0; }
+        }
+        #prevBtn, #nextBtn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            font-size: 3rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            z-index: 100001;
+            transition: background 0.3s, color 0.3s, transform 0.3s, opacity 0.5s;
+            border-radius: 8px;
+        }
+        #prevBtn:hover, #nextBtn:hover {
+            background: #ff477e;
+            transform: translateY(-50%) scale(1.1);
+        }
+        #prevBtn { left: 20px; }
+        #nextBtn { right: 20px; }
+        #slideshowOverlay.idle #closeBtn,
+        #slideshowOverlay.idle #prevBtn,
+        #slideshowOverlay.idle #nextBtn {
+            opacity: 0;
+            pointer-events: none;
+        }
+        @keyframes showBtn {
+            to { opacity: 0.6; pointer-events: auto; }
+        }
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 rgba(255, 71, 126, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 71, 126, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 71, 126, 0); }
+        }
+        #homeBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 71, 126, 0.85);
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 71, 126, 0.6);
+            cursor: pointer;
+            z-index: 1000000;
+            transition: background 0.3s, transform 0.3s, opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            animation: showBtn 2s ease-in-out forwards;
+        }
+        #homeBtn:hover {
+            background: #ff477e;
+            transform: scale(1.1);
+            opacity: 1 !important;
+        }
+        #homeBtn svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
+        #scrollDownBtn {
+            position: fixed;
+            bottom: 62px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 71, 126, 0.85);
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 71, 126, 0.6);
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #scrollDownBtn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #scrollDownBtn:hover {
+            background: #ff477e;
+            transform: scale(1.1);
+        }
+        #scrollDownBtn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+        #homeBtn.hidden {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        .love-popup {
+            position: fixed;
+            color: #ff477e;
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: sans-serif;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8), 0 0 15px currentColor;
+            z-index: 100003;
+            pointer-events: none;
+            animation: floatUpPopup 4s ease-in forwards;
+        }
+        @keyframes floatUpPopup {
+            0% { transform: translate(0, 100vh) scale(0.5); opacity: 0; }
+            15% { opacity: 1; transform: translate(2vw, 80vh) scale(1.2); }
+            35% { transform: translate(-3vw, 55vh) scale(1.1); }
+            65% { transform: translate(3vw, 25vh) scale(1.05); }
+            100% { transform: translate(-1vw, -20vh) scale(1); opacity: 0; }
+        }
+        .chest-word {
+            position: fixed;
+            color: #fff;
+            font-size: max(3rem, 7vw);
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            opacity: 0;
+            z-index: 999999;
+            text-shadow: 0 0 10px #ff477e, 0 0 20px #ff477e, 4px 4px 0px #b3003b;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+        #chestText1 { top: 25%; left: 20%; animation-duration: 2.5s; }
+        #chestText2 { top: 40%; left: 40%; animation-duration: 2.2s; }
+        #chestText3 { top: 55%; left: 60%; animation-duration: 1.9s; }
+        #chestText4 { top: 70%; left: 80%; animation-duration: 1.6s; }
+
+        .chest-word.visible {
+            animation-name: chestWordAnim;
+            animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes chestWordAnim {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(-15deg); filter: blur(15px); }
+            15% { opacity: 1; transform: translate(-50%, -50%) scale(1.1) rotate(0deg); filter: blur(0px); }
+            85% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); filter: blur(0px); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5) rotate(10deg); filter: blur(15px); }
+        }
+
+        .lyric-line-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90vw;
+            text-align: center;
+            font-size: max(2.5rem, 5vw);
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px #ff477e, 0 0 20px #ff477e, 4px 4px 0px #b3003b;
+            z-index: 999999;
+            pointer-events: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px 20px;
+            align-content: center;
+        }
+        .lyric-word-span {
+            opacity: 0;
+            display: inline-block;
+        }
+        @keyframes wordPop {
+            0% { opacity: 0; transform: scale(0.6) translateY(20px); filter: blur(5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+        }
+        @keyframes lyricLineFadeOut {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0px); }
+            100% { opacity: 0; transform: translate(-50%, -55%) scale(1.05); filter: blur(10px); }
+        }
+        @keyframes lyricLineBlastOut {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0px); color: #fff; }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); filter: blur(15px); color: #ffe4e1; text-shadow: 0 0 40px #ff477e, 0 0 80px #ff477e; }
+        }
+
+        #beatPulseOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ff477e;
+            opacity: 0;
+            pointer-events: none;
+        }
+        @keyframes pulseBeat {
+            0% { opacity: 0; }
+            100% { opacity: 0.15; }
+        }
+        #beatPulseOverlay.pulsing {
+            animation: pulseBeat 0.638s ease-in-out 28 alternate;
+        }
+
+        /* CD Styles */
+        #cd-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            cursor: pointer;
+            z-index: 999990;
+            filter: drop-shadow(0 0 20px rgba(100, 150, 255, 0.6));
+        }
+        #cd-art {
+            width: 280px;
+            height: 280px;
+            background: #050505;
+            box-shadow: 0 0 25px rgba(20, 50, 120, 0.8), inset 0 0 15px rgba(0,0,0,0.8);
+            border-radius: 50%;
+            position: relative;
+            animation: pulseCD 2s infinite ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .cd-cover {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            background: url('chest.jpg') center/74% no-repeat;
+            transition: opacity 1s ease-in-out;
+            z-index: 1;
+        }
+        #cd-art.expand-to-fill .cd-cover {
+            opacity: 0;
+        }
+        #cd-art::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 37.5%, rgba(255,255,255,0.15) 38%, transparent 38.5%),
+                        repeating-radial-gradient(
+                #0a1128,
+                #0a1128 3px,
+                #030612 4px
+            );
+            mask-image: radial-gradient(circle, transparent 38%, black 39%);
+            -webkit-mask-image: radial-gradient(circle, transparent 38%, black 39%);
+            pointer-events: none;
+            transition: opacity 1.5s ease;
+            z-index: 2;
+        }
+        #cd-art.expand-to-fill::before {
+            opacity: 0;
+        }
+        #cd-art::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.15;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: 3;
+            transition: opacity 1.5s ease;
+        }
+        #cd-art.expand-to-fill::after {
+            opacity: 0;
+        }
+        .cd-hole {
+            width: 14px;
+            height: 14px;
+            background: var(--body-bg, black);
+            border-radius: 50%;
+            border: none;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.9), 0 0 0 2px rgba(255,255,255,0.15);
+            z-index: 4;
+            transition: opacity 1.5s ease;
+        }
+        #cd-art.expand-to-fill .cd-hole {
+            opacity: 0;
+        }
+        @keyframes pulseCD {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        #cd-text {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+        .cd-glare {
+            position: absolute;
+            top: 0; left: 0;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 10deg,
+                rgba(255, 255, 255, 0.03) 30deg,
+                rgba(255, 255, 255, 0.15) 45deg,
+                rgba(255, 255, 255, 0.03) 60deg,
+                transparent 80deg,
+                transparent 190deg,
+                rgba(255, 255, 255, 0.03) 210deg,
+                rgba(255, 255, 255, 0.15) 225deg,
+                rgba(255, 255, 255, 0.03) 240deg,
+                transparent 260deg
+            );
+            animation: spinGlare 8s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+            transition: opacity 0.3s ease;
+        }
+        @keyframes spinGlare {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #cd-art.spin-fast {
+            animation: spin-fast 0.8s ease-in-out infinite;
+        }
+        #cd-art.spin-fast::after {
+            animation: spin-noise 0.25s linear infinite;
+        }
+        @keyframes spin-noise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spin-fast {
+            0% { transform: translateY(0); box-shadow: 0 0 20px rgba(100, 150, 255, 0.8), inset 0 0 10px rgba(0,0,0,0.5); }
+            25% { transform: translateY(-4px); box-shadow: 0 0 25px rgba(255, 105, 180, 0.8), inset 0 0 10px rgba(0,0,0,0.5); }
+            50% { transform: translateY(0); box-shadow: 0 0 20px rgba(100, 150, 255, 0.8), inset 0 0 10px rgba(0,0,0,0.5); }
+            75% { transform: translateY(4px); box-shadow: 0 0 25px rgba(255, 105, 180, 0.8), inset 0 0 10px rgba(0,0,0,0.5); }
+            100% { transform: translateY(0); box-shadow: 0 0 20px rgba(100, 150, 255, 0.8), inset 0 0 10px rgba(0,0,0,0.5); }
+        }
+        #cd-art.expand-to-fill {
+            animation: expand-and-spin 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @keyframes expand-and-spin {
+            0% { transform: translateY(0) scale(1); box-shadow: 0 0 20px rgba(100, 150, 255, 0.8), inset 0 0 10px rgba(0,0,0,0.5); }
+            100% { transform: translateY(0) scale(50); background: black; box-shadow: none; }
+        }
+        body.cd-phase {
+            --body-bg: transparent;
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #141e30);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+        }
+        .music-note-cd {
+            position: fixed;
+            bottom: -50px;
+            color: rgba(255, 255, 255, 0.2);
+            z-index: 999980;
+            pointer-events: none;
+            animation: floatNoteCD 4s linear forwards;
+            transition: opacity 0.5s ease-out;
+        }
+        @keyframes floatNoteCD {
+            0% { transform: translateY(0) rotate(-20deg) scale(0.8); opacity: 0; }
+            20% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(20deg) scale(1.2); opacity: 0; }
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div id="beatPulseOverlay"></div>
+    <a id="homeBtn" href="index.html" title="Home">
+        <svg viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+    </a>
+    <div id="scrollDownBtn" title="Scroll to End">
+        <svg viewBox="0 0 24 24">
+            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+        </svg>
+    </div>
+    <div id="fadeInOverlay"></div>
+    <div id="cd-container" onclick="cdClicked()">
+        <div id="cd-art">
+            <div class="cd-cover"></div>
+            <div class="cd-hole"></div>
+        </div>
+        <div class="cd-glare"></div>
+        <div id="cd-text">Chest Pain (I Love) - Malcolm Todd</div>
+    </div>
+    <div id="centerText">Hmm, aur bhi dekhna hai bihari ko</div>
+    <div id="centerText2">OKAY FINEE</div>
+    <div id="centerText3">I may be nonchalant, but never with you haha</div>
+    <div id="centerText4">This is just something I made for us<br>I hope you enjoy</div>
+    <div id="centerText5">Click on the CD when you're ready!</div>
+    <div id="chestText1" class="chest-word">MY</div>
+    <div id="chestText2" class="chest-word">CHEST</div> 
+    <div id="chestText3" class="chest-word">IS</div> 
+    <div id="chestText4" class="chest-word">HURTING</div> 
+
+    <div class="gallery">
+        <h2 id="gallery-heading">Our Beautiful Little Journey💌</h2>
+        <div class="polaroid"><img src="imgs/one.jpg" alt="Memory"><p class="caption">Chapter 1</p></div>
+        <div class="polaroid"><img src="imgs/two.png" alt="Memory"><p class="caption">Chapter 2</p></div>
+        <div class="polaroid"><img src="imgs/three.jpg" alt="Memory"><p class="caption">Chapter 3</p></div>
+        <div class="polaroid">
+            <video autoplay muted loop playsinline style="width: 200px; max-width: 40vw; height: 200px; object-fit: cover; display: block;">
+                <source src="imgs/four.mp4" type="video/mp4">
+            </video>
+            <p class="caption">Chapter 4</p></div>
+        <div class="polaroid">
+            <video autoplay muted loop playsinline style="width: 200px; max-width: 40vw; height: 200px; object-fit: cover; display: block;">
+                <source src="imgs/five.mp4" type="video/mp4">
+            </video>
+            <p class="caption">Chapter 5</p></div>
+        <div class="polaroid"><img src="imgs/six.jpg" alt="Memory"><p class="caption">Chapter 6</p></div>
+        <div class="polaroid"><img src="imgs/seven1.jpg" alt="Memory"><p class="caption">Chapter 7</p></div>
+        <div class="polaroid"><img src="imgs/eight.jpg" alt="Memory"><p class="caption">Chapter 8</p></div>
+        <div class="polaroid"><img src="imgs/nine.jpg" alt="Memory"><p class="caption">Chapter 9</p></div>
+        <div class="polaroid"><img src="imgs/ten.png" alt="Memory"><p class="caption">Chapter 10</p></div>
+        <div class="polaroid"><img src="imgs/eleven.jpg" alt="Memory"><p class="caption">Chapter 11</p></div>
+        <div class="polaroid"><img src="imgs/twelve.jpg" alt="Memory"><p class="caption">Chapter 12</p></div>
+        <div class="polaroid"><img src="imgs/thirteen.jpg" alt="Memory"><p class="caption">Chapter 13</p></div>
+        <div class="polaroid"><img src="imgs/fourteen.jpg" alt="Memory"><p class="caption">Chapter 14</p></div>
+        <div class="polaroid">
+            <video autoplay muted loop playsinline style="width: 200px; max-width: 40vw; height: 200px; object-fit: cover; display: block;">
+                <source src="imgs/fifteen.mp4" type="video/mp4">
+            </video>
+            <p class="caption">Chapter 15</p></div>
+        <div class="polaroid"><img src="imgs/sixteen.jpg" alt="Memory"><p class="caption">Chapter 16</p></div>
+        <p class="loading-more">MORE MEMORIES LOADING SOON... <COOKING class=""></COOKING></p>
+        <p class="loading-more">(Even these words and pictures can't fully describe our amazing and sundar journey)</p>
+    </div>
+
+    <div id="slideshowOverlay">
+        <span id="closeBtn" onclick="closeSlideshow()">&times;</span>
+        <button id="prevBtn" onclick="prevSlide()">&#10094;</button>
+        <button id="nextBtn" onclick="nextSlide()">&#10095;</button>
+        <div id="slideContent">
+            <div id="mediaContainer" style="position: relative; display: flex; justify-content: center; align-items: center;"></div>
+            <div id="intraNavContainer" style="display: none; text-align: center; margin-top: 10px; position: relative; z-index: 1;">
+                <button id="intraPrevBtn" onclick="intraPrev()" style="background: rgba(0,0,0,0.3); border: 1px solid white; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; margin: 0 15px;">&lt;</button>
+                <button id="playPauseBtn" onclick="togglePlayPause()" style="background: rgba(0,0,0,0.3); border: 1px solid white; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer;"></button>
+                <button id="intraNextBtn" onclick="intraNext()" style="background: rgba(0,0,0,0.3); border: 1px solid white; color: white; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; margin: 0 15px;">&gt;</button>
+            </div>
+            <p id="slideText"></p>
+        </div>
+    </div>
+
+    <audio id="chestAudio" preload="auto"><source src="chest.mp3" type="audio/mp3"></audio>
+    <audio id="scratchAudio" preload="auto"><source src="scratch.mp3" type="audio/mp3"></audio>
+    <script>
+        let mainExperienceStarted = false;
+        let noteInterval;
+
+        function showCD() {
+            document.body.classList.add('cd-phase');
+            document.getElementById('cd-container').style.display = 'block';
+
+            // Add minor floating musical notes in the background
+            noteInterval = setInterval(() => {
+                let note = document.createElement("div");
+                note.className = "music-note-cd";
+                note.innerHTML = Math.random() > 0.5 ? "&#9834;" : "&#9835;";
+                note.style.left = Math.random() * 100 + "vw";
+                note.style.fontSize = (Math.random() * 2 + 1) + "rem";
+                note.style.animationDuration = (Math.random() * 2 + 3) + "s";
+                document.body.appendChild(note);
+                setTimeout(() => note.remove(), 5000);
+            }, 600);
+        }
+
+        function cdClicked() {
+            if (mainExperienceStarted) return;
+            mainExperienceStarted = true;
+
+            const cdContainer = document.getElementById('cd-container');
+            const cdArt = document.getElementById('cd-art');
+            const cdText = document.getElementById('cd-text');
+            const cdGlare = document.querySelector('.cd-glare');
+            const cdCover = document.querySelector('.cd-cover');
+            const cdHole = document.querySelector('.cd-hole');
+
+            clearInterval(noteInterval);
+
+            cdContainer.onclick = null;
+            cdContainer.style.cursor = 'default';
+
+            if (cdText) cdText.style.opacity = '0';
+            if (cdGlare) cdGlare.style.animationDuration = '0.6s';
+            if (cdCover) cdCover.style.opacity = '0';
+            if (cdHole) cdHole.style.opacity = '0';
+
+            const scratchAudio = document.getElementById("scratchAudio");
+            scratchAudio.play().catch(e => console.log("Autoplay blocked by browser:", e));
+
+            cdArt.classList.remove('pulseCD');
+            cdArt.classList.add('spin-fast');
+
+            setTimeout(() => {
+                if (cdGlare) cdGlare.style.opacity = '0';
+                cdArt.classList.remove('spin-fast');
+                cdArt.classList.add('expand-to-fill');
+
+                // Remove heavy drop-shadow filter to prevent jitters during massive scaling
+                cdContainer.style.filter = 'none';
+
+                // Suck the music notes into the center hole
+                document.querySelectorAll('.music-note-cd').forEach(n => {
+                    const rect = n.getBoundingClientRect();
+                    n.style.animation = 'none';
+                    n.style.left = rect.left + 'px';
+                    n.style.top = rect.top + 'px';
+                    n.style.bottom = 'auto';
+                    n.style.transform = 'none';
+                    
+                    // Force DOM to update without animation
+                    void n.offsetWidth;
+                    
+                    n.style.transition = 'all 1.2s cubic-bezier(0.5, 0, 0.2, 1)';
+                    n.style.left = '50vw';
+                    n.style.top = '50vh';
+                    n.style.transform = 'translate(-50%, -50%) scale(0) rotate(360deg)';
+                    n.style.opacity = '0';
+                });
+
+                cdArt.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'expand-and-spin') {
+                        // Wait 0.5 seconds in total darkness before starting
+                        setTimeout(() => {
+                            cdContainer.style.display = 'none';
+                            document.body.classList.remove('cd-phase');
+                            startMainExperience();
+                        }, 500);
+                    }
+                }, { once: true });
+            }, 1000);
+        }
+
+        function startMainExperience() {
+            const mainExperienceBaseTime = 25500;
+
+            // Play audio
+            const chestAudio = document.getElementById("chestAudio");
+            chestAudio.play().catch(e => console.log("Autoplay blocked by browser:", e));
+
+            // Schedule chest words
+            setTimeout(() => document.getElementById('chestText1').classList.add('visible'), 27500 - mainExperienceBaseTime);
+            setTimeout(() => document.getElementById('chestText2').classList.add('visible'), 27800 - mainExperienceBaseTime);
+            setTimeout(() => document.getElementById('chestText3').classList.add('visible'), 28100 - mainExperienceBaseTime);
+            setTimeout(() => document.getElementById('chestText4').classList.add('visible'), 28400 - mainExperienceBaseTime);
+
+            // Schedule beat pulse
+            setTimeout(() => document.getElementById('beatPulseOverlay').classList.add('pulsing'), 28500 - mainExperienceBaseTime);
+
+            // Schedule lyrics
+            kineticLines.forEach((line) => {
+                setTimeout(() => {
+                    let container = document.createElement("div");
+                    container.className = "lyric-line-container";
+                    document.body.appendChild(container);
+                    
+                    const elegantColors = ['#ffffff', '#a2d2ff', '#ffb3c6', '#bde0fe', '#ff8fab'];
+
+                    line.words.forEach((word, idx) => {
+                        let span = document.createElement("span");
+                        span.className = "lyric-word-span";
+                        span.innerText = word.text;
+                        span.style.color = elegantColors[idx % elegantColors.length];
+                        container.appendChild(span);
+
+                        setTimeout(() => {
+                            span.style.animation = "wordPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
+                        }, (word.time - line.start) * 1000);
+                    });
+
+                    setTimeout(() => {
+                        container.style.animation = line.blast 
+                            ? 'lyricLineBlastOut 0.4s cubic-bezier(0.2, 0, 0.2, 1) forwards'
+                            : 'lyricLineFadeOut 0.5s ease forwards';
+                        setTimeout(() => container.remove(), line.blast ? 400 : 2500);
+                    }, (line.end - line.start) * 1000);
+
+                }, (line.start * 1000) - mainExperienceBaseTime);
+            });
+
+            // Schedule "I LOVEE" popups
+            iLoveTimings.forEach(function(timeOffset) {
+                for(let i=0; i<5; i++) {
+                    setTimeout(function() {
+                        const popupColors = ['#ff477e', '#4facfe', '#ff9a9e', '#00f2fe', '#ff8fab'];
+                        let popup = document.createElement("div");
+                        popup.className = "love-popup";
+                        popup.innerText = "I LOVEE";
+                        popup.style.color = popupColors[Math.floor(Math.random() * popupColors.length)];
+                        popup.style.left = (Math.random() * 85 + 5) + "vw";
+                        popup.style.fontSize = (Math.random() * 2 + 1.5) + "rem";
+                        document.body.appendChild(popup);
+                        setTimeout(() => popup.remove(), 4000);
+                    }, (timeOffset * 1000) + (i * 80));
+                }
+            });
+
+            // Schedule later animations
+            setTimeout(prettyHeartTransition, 46500 - mainExperienceBaseTime);
+            setTimeout(() => document.body.classList.add('final-bg'), 46500 - mainExperienceBaseTime);
+            setTimeout(() => {
+                setInterval(() => {
+                    var heart = document.createElement("div");
+                    heart.className = "floating-heart";
+                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.animation = "floatUpHeart " + (Math.random() * 3 + 4) + "s linear forwards";
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 7000);
+                }, 400);
+            }, 46500 - mainExperienceBaseTime);
+            setTimeout(() => document.querySelector('.gallery').classList.add('visible'), 47300 - mainExperienceBaseTime);
+            setTimeout(() => document.getElementById('scrollDownBtn').classList.add('visible'), 47300 - mainExperienceBaseTime);
+        }
+
+        // Setup data for zoomed slideshow (Edit the paragraphs freely here!)
+        const slideData = [
+            { src: 'imgs/one.jpg', text: 'October, 2024. The first time we ever met, SSMUN 24, back when my Adwita was just a shy girl who got her first chance to play with the band, the same girl who never spoke, and panicked because she thought I was a mean egoistic guy😭, but at the end we both realized that maybe we are cooler than we think, this was just the trailer of what is about to happen LMAO (sorry for the bad quality pic💀)' },
+            { src: 'imgs/two.png', text: '28th November, the day a "random girl" texted me asking about why I couldnt attend the junk band stayback, and suddenly we were chatting all day and night. 1st December, the day the same "random girl" sent me a reel from her pvt which I didnt even follow. 2nd December, the day "adwita🍷" replied to my party story saying "Song🔥". This was the absolute start of the best bond in the world😝' },
+            { 
+                media: [
+                    { type: 'image', src: 'imgs/three.jpg' },
+                    { type: 'video', src: 'imgs/three1.mp4' },
+                    { type: 'video', src: 'imgs/three2.mp4' }
+                ],
+                text: '5th December, the legendary day where I invented the name "kaleshwita". I used to think that Adwita was an angry girl who has too many kaands, but that day I realized that she might actually be the most precious, adorable and pure person I know. This was also the time you started opening up to me and I realized how strong and brave this amazing girl is, the type of person I actually love talking to. We officially became best friends, the bond where we abuse and roast the shit out of each other, but also the ones to provide the utmost care and support anyone can ever imagine😉' 
+            },
+            { 
+                media: [
+                    { type: 'video', src: 'imgs/four.mp4' }
+                ],
+                managesBgAudio: true,
+                text: '7th December, we had our grand 15th year program, this was the first time I saw my BESTESTEST FRIEND perform on stage for the first time, she literally SHINED BRIGHT LIKE A DIAMOND. When I had back to back performances and I was so tired and frustrated, all I needed was one glimpse of the special girl, my best friend, who was standing right beside the stage waiting for me, thats when something in me changed, I started liking you a bit hahaha' 
+            },
+            {
+                media: [
+                    { type: 'video', src: 'imgs/five.mp4' },
+                    { type: 'video', src: 'imgs/five1.mp4' }
+                ],
+                text: 'Those crazy staybacks, bunking all classes and having fun while practicing for junk band. We had grown extremely close, always teasing each other while also being there whenever one of us needed any help. We were so close that your other "best friends" suddenly started getting jealous of us LMAOO. By this time I had slowly started opening up to you and we werent just people who did kalesh and had fun, we were people who talked about everything and anything. You were the only reason I started rediscovering myself, I felt calm, I felt jolly, I felt confident, and most importantly, I felt LOVE'
+            },
+            {
+                media: [
+                    { type: 'image', src: 'imgs/six.jpg' },
+                    { type: 'video', src: 'imgs/six1.mp4' }
+                ],
+                text: 'Here comes the most iconic and legendary memory ever, FUCKING BANGALORE 2024, the trip where we were paired like crazy, you being called my distraction, but we both know that was all BULLSHIT. We had soooo much fun hanging out together, doing side quests and raiding the canteen every second. Sneaking out while everybody was changing for traditional day to have blackcurrant mojito while we sat together was THE BEST. You were my literal source of motivation, the face that healed my sadness with just one look and no words, the one who taught me to be myself and enjoy. This was the time when I really knew that you were indeed too special, a person I have genuine love for'
+            },
+            {
+                media: [
+                    { type: 'image', src: 'imgs/seven1.jpg' },
+                    { type: 'image', src: 'imgs/seven2.jpg' },
+                    { type: 'image', src: 'imgs/seven.jpg' }
+                ],
+                text: '28th December, the day you confessed your feelings to me, I almost cried because tumse genuinely pyaar hogaya tha, and the way you confessed to me in classic kaleshwita fashion, ranting for 2 hours before finally giving in and confessing, how can I ever forget that, the way you rant, the way you text, SO FUCKING ADORABLE AND INSANE, I LOVELOVELOVE YOUR TRUE SELF SO MUCHH. I may be a bad expresser, but THIS WAS ONE OF THE BEST DAYS OF MY LIFE'
+            },
+            {
+                media: [
+                    { type: 'image', src: 'imgs/eight.jpg' },
+                    { type: 'video', src: 'imgs/eight.mp4' }
+                ],
+                text: '28th January, the day I recieved the most precious thing in my life, a LETTER FROM YOU, it genuinely made me cry because I never knew love was so beautiful. This is something I have preserved along with your rubber band to keep it forever safe and close to my heart. Thats when I vowed, Im gonna be with this girl, support her, keep her safe FOREVER. The small planned hangouts we had in school were so fun, giving you daily paper notes and berry foxes were even better. Never knew these small things would become a nostalgia now🥹'
+            },
+            { src: 'imgs/nine.jpg', text: 'This was sadly an unfortunate time for us, you went through a lot of problems, even we had trouble communicating and talking to each other, things just were bad. And lets be honest, if "your 2 opps" werent involved in our conversations, we would have fixed things in a day🤷. But still, we proved how strong the RANDEER KALESHI BOND is, we performed in Youthopia 25 and had sososo much fun in the concert, you even PAINTED MY NAIL DEEP PINK LMAOOO(baddie alert). I know this is not our best memory but it proved that our connection was genuine asf and its okay to embrace some negative memories too, we tackled it together like always :)' },
+            { src: 'imgs/ten.png', text: 'Fast forward to July/August 2025, this was probably our least interactive phase, we just couldnt talk even if we wanted to and lets be honest, our friend groups were trying to turn us against each other by asking us not to talk anymore. You went through a lot that time too, things at home, getting your insta deleted then remaking a new one using my phone during our Xuberance side quest. It didnt feel the same and it felt like we were losing our bond, BUT SIKEEEE, CAN RANDEER AND KALESHWITA EVER LOSE THEIR BOND?😛 We slowly started talking and opening up to each other like we used to, we went to garba only to see each other(no pics sed lyf) and WE WERE SOO BACKKKKK' },
+            { src: 'imgs/eleven.jpg', text: 'Here comes our last day in school as normal students, now we just had boards to attend, this was the saddest day for me since I had to say bye to the school, bye to music and bye to sports, and most importantly BYE TO YOU, I cried so much and I never felt worse, but its life and we have to adapt, plus I trusted us so much that I knew all this shit isnt going to affect us even one bit hahahaha, and did it? HELL NAHHHH LMAO' },
+            { src: 'imgs/twelve.jpg', text: 'Now comes the new year, 2026, a new beginning and rediscovering for both of us. This Adwita to me was so different, she was still the cute, pure and lovable girl but she had also gained a lot of confidence. The same Adwi who was scared to post a note now was posting pictures after pictures of herself and embraced her princess like beauty. And my god was I in awe of every single picture. This also showed me how Adwita might have gone through so much, might have made mistakes, but there is no one even close to as brave as her, she faces everything no matter what and still manages to glow brighter than the sun. This makes me glad cuz I definitely chose the right person to be close with. I AM SO PROUD OF YOU FOR EVERYTHING, your achievements, your bravery, even your mistakes, Im proud because of the lovely person you are' },
+            { src: 'imgs/thirteen.jpg', text: 'OUR BOARDS GOT FINISHED YAYYY, and im proud of both of us for scoring well and doing our best no matter the challenges. We finally saw our faces after almost 2 3 months, and you stuck with me in Youthopia despite my friends not being too much in favour of that LMAOO, but FUCK IT WE BALL, we finally got to hangout and have a sidequest almost a year later. We did so many risky things, sneaking out to Mcdonalds, hiding from your dad and then getting you an uber to drop you to heritage again😭. I was sad that you didnt get the full freedom you wanted on that day, but that genuine smile and sense of enjoyment on your face made it so worth it. I felt so great just thinking that I made you have fun and feel safe. CHEERS TO 10000S OF MORE SIDEQUESTS AND KALESH HAHAHAHA, and I love this pic of ours so much lol' },
+            { src: 'imgs/fourteen.jpg', text: 'BRO IS ONE OF DA GREEN TSHIRTS NOW, this pic is of when I came to your coaching to collect the 16k you had to get you YOUR IPHONE AHAHXHJDJHDJSJSJ, and on 20th June, OUR WORLD CLASS KALESH WAS SUCESSFUL HAHAHA, but jokes aside, you really really deserved it. Im sosososo glad I can be the reason you get some more freedom. And I cant forget the HUGE smile you had at 4:42pm, thats the happiest Ive seen you in a long time. You smiled so hard that I could see the dimple on your left cheek which you said you didnt before. Completing a major KALESH and making MY Kaleshwita sososo happyyyyyy?? Yeah good luck to any other thing beating this feeling😉' },
+            { media: [
+                    { type: 'video', src: 'imgs/fifteen.mp4' }
+                ],
+                 text: 'MC DOING EMCEE, WAOWWWWWW. I came to school after 3 months just to see MERI JAAN hosting middle school ka talent hunt LMAOOO. This is around the time we planned we are gonna get a sim for you. THE WORLD MAY FALL BUT KALESHWITA ALWAYS RISES HAHAHAHA. Its always a refreshment therapy to tease and threaten my twin with my iconic green bottle' 
+            },
+            { src: 'imgs/sixteen.jpg', text: '' }
+
+        ];
+
+        let slideIndex = 0;
+        let mediaSubIndex = 0;
+        let slideInterval;
+        let slideshowActive = false;
+        let idleTimer;
+        let isAutoPlay = false;
+        let wasAudioPlaying = false;
+
+        function resetIdleTimer() {
+            const overlay = document.getElementById('slideshowOverlay');
+            overlay.classList.remove('idle');
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+                if (slideshowActive) {
+                    overlay.classList.add('idle');
+                }
+            }, 3000);
+        }
+
+        function manageBackgroundAudio(action) {
+            const chestAudio = document.getElementById("chestAudio");
+            if (!chestAudio) return;
+
+            if (action === 'pauseForVideo') {
+                if (!chestAudio.paused) {
+                    wasAudioPlaying = true;
+                    chestAudio.pause();
+                } else {
+                    wasAudioPlaying = false;
+                }
+            } else if (action === 'resumeAfterVideo') {
+                // Only resume if it was playing before we paused it for a video.
+                if (wasAudioPlaying) {
+                    chestAudio.play().catch(e => console.log("Audio resume failed", e));
+                }
+                wasAudioPlaying = false; // Reset state
+            }
+        }
+
+        function prettyHeartTransition() {
+            const colors = ['#ffb3c6', '#ff477e', '#a2d2ff', '#ffffff', '#bde0fe', '#ff8fab'];
+            for(let i=0; i<60; i++) {
+                let h = document.createElement('div');
+                h.className = 'burst-heart';
+                h.style.setProperty('--c', colors[Math.floor(Math.random() * colors.length)]);
+                
+                let angle = Math.random() * Math.PI * 2;
+                let distance = Math.random() * 45 + 10; // in vw
+                h.style.setProperty('--tx', (Math.cos(angle) * distance) + 'vw');
+                h.style.setProperty('--ty', (Math.sin(angle) * distance) + 'vh');
+                h.style.setProperty('--scale', Math.random() * 1.5 + 0.5);
+                h.style.setProperty('--rot', (Math.random() * 180 - 90) + 'deg');
+                
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 3000);
+            }
+            
+            // Soft glowing bloom flash
+            let flash = document.createElement('div');
+            flash.style.position = 'fixed';
+            flash.style.top = '0'; flash.style.left = '0';
+            flash.style.width = '100%'; flash.style.height = '100%';
+            flash.style.background = 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,182,193,0.5) 50%, rgba(255,255,255,0) 100%)';
+            flash.style.zIndex = '99997';
+            flash.style.pointerEvents = 'none';
+            flash.style.opacity = '0';
+            flash.style.transition = 'opacity 1.5s ease-out';
+            document.body.appendChild(flash);
+            
+            setTimeout(() => flash.style.opacity = '1', 50);
+            setTimeout(() => flash.style.opacity = '0', 1000);
+            setTimeout(() => flash.remove(), 2500);
+        }
+        function triggerLoveEffect() {
+            for(let i=0; i<25; i++) {
+                let h = document.createElement('div');
+                h.className = 'switch-heart';
+                h.style.left = '50%';
+                h.style.top = '40%';
+                
+                let angle = Math.random() * Math.PI * 2;
+                let distance = Math.random() * 300 + 50; 
+                h.style.setProperty('--tx', (Math.cos(angle) * distance) + 'px');
+                h.style.setProperty('--ty', (Math.sin(angle) * distance) + 'px');
+                
+                document.getElementById('slideshowOverlay').appendChild(h);
+                setTimeout(() => h.remove(), 1500);
+            }
+        }
+
+        function showSlide(index, isFirst = false) {
+            const content = document.getElementById('slideContent');
+            content.classList.remove('active');
+            
+            if (!isFirst) {
+                triggerLoveEffect();
+            }
+
+            mediaSubIndex = 0; // Reset sub-index
+
+            setTimeout(() => {
+                const currentSlideData = slideData[index];
+                const mediaContainer = document.getElementById('mediaContainer');
+                const intraNav = document.getElementById('intraNavContainer');
+
+                document.getElementById('slideText').innerHTML = currentSlideData.text;
+
+                if (currentSlideData.media) {
+                    intraNav.style.display = 'block';
+                    showSubMedia(index, 0); // Show first sub-media item
+                } else {
+                    manageBackgroundAudio('resumeAfterVideo');
+                    intraNav.style.display = 'none';
+                    mediaContainer.innerHTML = ''; // Clear previous content
+                    const img = document.createElement('img');
+                    img.src = currentSlideData.src;
+                    img.style.cssText = `
+                        max-width: 85vw;
+                        max-height: 45vh;
+                        border: 8px solid white;
+                        border-radius: 12px;
+                        box-shadow: 0 10px 30px rgba(255,105,180, 0.6);
+                        object-fit: contain;
+                    `;
+                    mediaContainer.appendChild(img);
+                }
+                
+                content.classList.add('active');
+            }, isFirst ? 100 : 1000); 
+        }
+
+        function showSubMedia(slideIdx, subIdx, isIntraSwitch = false) {
+            const mediaContainer = document.getElementById('mediaContainer');
+            
+            const displayNewMedia = () => {
+                const mediaItem = slideData[slideIdx].media[subIdx];
+                const managesBgAudio = slideData[slideIdx].managesBgAudio || false;
+                const playPauseBtn = document.getElementById('playPauseBtn');
+                const intraPrevBtn = document.getElementById('intraPrevBtn');
+                const intraNextBtn = document.getElementById('intraNextBtn');
+
+                mediaContainer.innerHTML = ''; // Clear previous content
+                
+                const mediaElementStyles = `
+                    max-width: 85vw;
+                    max-height: 45vh;
+                    border: 8px solid white;
+                    border-radius: 12px;
+                    box-shadow: 0 10px 30px rgba(255,105,180, 0.6);
+                    object-fit: contain;
+                `;
+
+                let newMediaElement;
+
+                if (mediaItem.type === 'image') {
+                    if (managesBgAudio) {
+                        manageBackgroundAudio('resumeAfterVideo');
+                    }
+                    const img = document.createElement('img');
+                    img.src = mediaItem.src;
+                    img.style.cssText = mediaElementStyles;
+                    mediaContainer.appendChild(img);
+                    newMediaElement = img;
+                    playPauseBtn.style.display = 'none';
+                } else if (mediaItem.type === 'video') {
+                    if (managesBgAudio) {
+                        manageBackgroundAudio('pauseForVideo');
+                    }
+                    const video = document.createElement('video');
+                    video.src = mediaItem.src;
+                    video.style.cssText = mediaElementStyles;
+                    video.autoplay = true;
+                    video.muted = false;
+                    video.loop = false;
+    
+                    video.onended = () => {
+                        playPauseBtn.innerHTML = '&#9658;';
+                        if (managesBgAudio) {
+                            manageBackgroundAudio('resumeAfterVideo');
+                        }
+                    };
+                    video.onplay = () => { playPauseBtn.innerHTML = '&#10074;&#10074;'; };
+                    video.onpause = () => { playPauseBtn.innerHTML = '&#9658;'; };
+    
+                    mediaContainer.appendChild(video);
+                    newMediaElement = video;
+                    playPauseBtn.style.display = 'inline-block';
+                }
+
+                if (isIntraSwitch && newMediaElement) {
+                    newMediaElement.style.transition = 'opacity 0.3s ease-in-out';
+                    newMediaElement.style.opacity = 0;
+                    setTimeout(() => {
+                        newMediaElement.style.opacity = 1;
+                    }, 10);
+                }
+    
+                // Update nav button states
+                intraPrevBtn.disabled = subIdx === 0;
+                intraNextBtn.disabled = subIdx === slideData[slideIdx].media.length - 1;
+                
+                if (slideData[slideIdx].media.length > 1) {
+                    intraPrevBtn.style.display = 'inline-block';
+                    intraNextBtn.style.display = 'inline-block';
+                    intraPrevBtn.style.opacity = intraPrevBtn.disabled ? '0.3' : '1';
+                    intraNextBtn.style.opacity = intraNextBtn.disabled ? '0.3' : '1';
+                } else {
+                    intraPrevBtn.style.display = 'none';
+                    intraNextBtn.style.display = 'none';
+                }
+            };
+
+            if (isIntraSwitch) {
+                const currentMedia = mediaContainer.firstChild;
+                if (currentMedia) {
+                    currentMedia.style.transition = 'opacity 0.3s ease-in-out';
+                    currentMedia.style.opacity = 0;
+                    setTimeout(displayNewMedia, 300);
+                } else {
+                    displayNewMedia();
+                }
+            } else {
+                displayNewMedia();
+            }
+        }
+
+        function intraPrev() {
+            if (mediaSubIndex > 0) {
+                mediaSubIndex--;
+                showSubMedia(slideIndex, mediaSubIndex, true);
+            }
+        }
+
+        function intraNext() {
+            const currentSlideData = slideData[slideIndex];
+            if (mediaSubIndex < currentSlideData.media.length - 1) {
+                mediaSubIndex++;
+                showSubMedia(slideIndex, mediaSubIndex, true);
+            }
+        }
+
+        function togglePlayPause() {
+            const video = document.querySelector('#mediaContainer video');
+            if (video) {
+                const managesBgAudio = slideData[slideIndex].managesBgAudio || false;
+                if (video.paused) {
+                    if (managesBgAudio) manageBackgroundAudio('pauseForVideo');
+                    video.play();
+                } else {
+                    if (managesBgAudio) manageBackgroundAudio('resumeAfterVideo');
+                    video.pause();
+                }
+                // Unmute on first user interaction with the button, if it's muted
+                if (video.muted) {
+                    video.muted = false;
+                }
+            }
+        }
+
+        function startSlideshow(autoPlay = true) {
+            if (slideshowActive) return;
+            slideshowActive = true;
+            isAutoPlay = autoPlay;
+            const overlay = document.getElementById('slideshowOverlay');
+            document.getElementById('scrollDownBtn').classList.remove('visible');
+            document.getElementById('homeBtn').classList.add('hidden');
+            overlay.style.display = 'flex';
+            setTimeout(() => { overlay.style.opacity = '1'; }, 50);
+            
+            showSlide(slideIndex, true);
+            
+            if (isAutoPlay) {
+                startInterval();
+            } else {
+                clearInterval(slideInterval);
+            }
+            
+            resetIdleTimer();
+            overlay.addEventListener('mousemove', resetIdleTimer);
+            overlay.addEventListener('touchstart', resetIdleTimer);
+        }
+
+        function startInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => {
+                if(!slideshowActive) return;
+                slideIndex = (slideIndex + 1) % slideData.length;
+                showSlide(slideIndex);
+            }, 7000);
+        }
+
+        function prevSlide() {
+            slideIndex = (slideIndex - 1 + slideData.length) % slideData.length;
+            showSlide(slideIndex);
+            if (isAutoPlay) startInterval(); // Reset the auto-slide timer if playing
+        }
+
+        function nextSlide() {
+            slideIndex = (slideIndex + 1) % slideData.length;
+            showSlide(slideIndex);
+            if (isAutoPlay) startInterval(); // Reset the auto-slide timer if playing
+        }
+
+        function closeSlideshow() {
+            slideshowActive = false;
+            clearInterval(slideInterval);
+            clearTimeout(idleTimer);
+            const overlay = document.getElementById('slideshowOverlay');
+            overlay.classList.remove('idle');
+            overlay.removeEventListener('mousemove', resetIdleTimer);
+            overlay.removeEventListener('touchstart', resetIdleTimer);
+            document.getElementById('scrollDownBtn').classList.add('visible');
+            document.getElementById('homeBtn').classList.remove('hidden');
+            const video = document.querySelector('#mediaContainer video');
+            if (video) {
+                video.pause();
+            }
+            manageBackgroundAudio('resumeAfterVideo');
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 1000);
+        }
+
+        // Add click events to gallery images so they can be re-opened manually later
+        document.querySelectorAll('.polaroid').forEach((polaroid, idx) => {
+            polaroid.addEventListener('click', () => {
+                slideIndex = idx;
+                startSlideshow(false); // Open manually, no auto-play
+            });
+        });
+
+        document.getElementById('scrollDownBtn').addEventListener('click', () => {
+            const gallery = document.querySelector('.gallery');
+            gallery.scrollTo({
+                top: gallery.scrollHeight,
+                behavior: 'smooth'
+            });
+        });
+
+        // Trigger pretty soft heart burst transition perfectly at the drop
+        // setTimeout(prettyHeartTransition, 46500); // Moved to startMainExperience
+        
+        // Smooth line-by-line kinetic lyrics
+        const kineticLines = [
+            {
+                start: 29.9, end: 32.5,
+                words: [{text: "MY", time: 29.9}, {text: "FEET", time: 30.2}, {text: "CAN'T", time: 30.5}, {text: "FALL", time: 30.8}, {text: "OUT", time: 31.2}, {text: "OF", time: 31.7}, {text: "BED", time: 32.3}]
+            },
+            {
+                start: 32.9, end: 37.0,
+                words: [{text: "I", time: 32.9}, {text: "DON'T", time: 33.3}, {text: "KNOW", time: 33.8}, {text: "WHERE", time: 34.2}, {text: "TO", time: 34.6}, {text: "GO,", time: 35.0}, {text: "SO", time: 35.5}, {text: "I'LL", time: 35.9}, {text: "LAY", time: 36.2}, {text: "HERE", time: 36.6}, {text: "INSTEAD", time: 36.9}]
+            },
+            {
+                start: 37.5, end: 42.0,
+                words: [{text: "WITH", time: 37.5}, {text: "MY", time: 37.9}, {text: "SYMPTOMS,", time: 38.2}, {text: "SYMPTOMS", time: 38.9}, {text: "OF", time: 39.5}, {text: "SORROW", time: 40.4}, {text: "AND", time: 40.7}, {text: "DREAD", time: 41.0}]
+            },
+            {
+                start: 42.6, end: 46.5, blast: true,
+                words: [{text: "THEY", time: 42.6}, {text: "ALL", time: 42.9}, {text: "SAID", time: 43.2}, {text: "IT", time: 43.5}, {text: "WOULD", time: 43.8}, {text: "FADE,", time: 44.1}, {text: "BUT", time: 44.6}, {text: "AGAIN", time: 45.2}, {text: "AND", time: 45.7}, {text: "AGAIN...", time: 46.3}]
+            }
+        ];
+        const iLoveTimings = [
+            // Chorus 1 (approx 0:21)
+            21.0, 22.5, 24.0, 25.0, 26.0, 27.5, 28.5, 29.5,
+            31.0, 32.5, 34.0, 35.0, 36.0, 37.5, 38.5, 39.0,
+        ];
+        setTimeout(showCD, 28000);
+    </script>
+</body>
+</html>
