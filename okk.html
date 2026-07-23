@@ -764,7 +764,7 @@
             <p class="caption">Chapter 15</p></div>
         <div class="polaroid"><img src="imgs/sixteen.jpg" alt="Memory"><p class="caption">Chapter 16</p></div>
         <p class="loading-more">MORE MEMORIES LOADING SOON... <COOKING class=""></COOKING></p>
-        <p class="loading-more">(Even these words and pictures can't fully describe our amazing and sundar journey)</p>
+        <p class="loading-more">(Even these words and pictures can't fully describe our amazing and journey)</p>
     </div>
 
     <div id="slideshowOverlay">
@@ -1015,7 +1015,7 @@
                 ],
                  text: 'MC DOING EMCEE, WAOWWWWWW. I came to school after 3 months just to see MERI JAAN hosting middle school ka talent hunt LMAOOO. This is around the time we planned we are gonna get a sim for you. THE WORLD MAY FALL BUT KALESHWITA ALWAYS RISES HAHAHAHA. Its always a refreshment therapy to tease and threaten my twin with my iconic green bottle' 
             },
-            { src: 'imgs/sixteen.jpg', text: '' }
+            { src: 'imgs/sixteen.jpg', text: 'This is the birth of the new Adwita, the one that now has a proper phone with a working sim AND IM SO GLAD I COULD BE THE ONE THIS WAS POSSIBLE, YOU HAVE NO IDEA HOW HAPPY I AM FOR YOU, sukoon milta hai to see the person I love be so happy. It also feels great seeing "Yes(No)" text me, reminds me of Bangalore very much. Whenever you read this, I just want to let you know that I will always be helping you no matter what, if you fall, ill fall with you and pick you back up higher than youve ever been ;)' }
 
         ];
 
@@ -1150,105 +1150,76 @@
             }, isFirst ? 100 : 1000); 
         }
 
-        function showSubMedia(slideIdx, subIdx, isIntraSwitch = false) {
+        function showSubMedia(slideIdx, subIdx) {
+            const mediaItem = slideData[slideIdx].media[subIdx];
+            const managesBgAudio = slideData[slideIdx].managesBgAudio || false;
             const mediaContainer = document.getElementById('mediaContainer');
-            
-            const displayNewMedia = () => {
-                const mediaItem = slideData[slideIdx].media[subIdx];
-                const managesBgAudio = slideData[slideIdx].managesBgAudio || false;
-                const playPauseBtn = document.getElementById('playPauseBtn');
-                const intraPrevBtn = document.getElementById('intraPrevBtn');
-                const intraNextBtn = document.getElementById('intraNextBtn');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const intraPrevBtn = document.getElementById('intraPrevBtn');
+            const intraNextBtn = document.getElementById('intraNextBtn');
 
-                mediaContainer.innerHTML = ''; // Clear previous content
-                
-                const mediaElementStyles = `
-                    max-width: 85vw;
-                    max-height: 45vh;
-                    border: 8px solid white;
-                    border-radius: 12px;
-                    box-shadow: 0 10px 30px rgba(255,105,180, 0.6);
-                    object-fit: contain;
-                `;
+            mediaContainer.innerHTML = ''; // Clear previous content
+            const mediaElementStyles = `
+                max-width: 85vw;
+                max-height: 45vh;
+                border: 8px solid white;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(255,105,180, 0.6);
+                object-fit: contain;
+            `;
 
-                let newMediaElement;
-
-                if (mediaItem.type === 'image') {
+            if (mediaItem.type === 'image') {
+                if (managesBgAudio) {
+                    manageBackgroundAudio('resumeAfterVideo');
+                }
+                const img = document.createElement('img');
+                img.src = mediaItem.src;
+                img.style.cssText = mediaElementStyles;
+                mediaContainer.appendChild(img);
+                playPauseBtn.style.display = 'none';
+            } else if (mediaItem.type === 'video') {
+                if (managesBgAudio) {
+                    manageBackgroundAudio('pauseForVideo');
+                }
+                const video = document.createElement('video');
+                video.src = mediaItem.src;
+                video.style.cssText = mediaElementStyles;
+                video.autoplay = true;
+                video.muted = false;
+                video.loop = false;
+ 
+                video.onended = () => {
+                    playPauseBtn.innerHTML = '&#9658;';
                     if (managesBgAudio) {
                         manageBackgroundAudio('resumeAfterVideo');
                     }
-                    const img = document.createElement('img');
-                    img.src = mediaItem.src;
-                    img.style.cssText = mediaElementStyles;
-                    mediaContainer.appendChild(img);
-                    newMediaElement = img;
-                    playPauseBtn.style.display = 'none';
-                } else if (mediaItem.type === 'video') {
-                    if (managesBgAudio) {
-                        manageBackgroundAudio('pauseForVideo');
-                    }
-                    const video = document.createElement('video');
-                    video.src = mediaItem.src;
-                    video.style.cssText = mediaElementStyles;
-                    video.autoplay = true;
-                    video.muted = false;
-                    video.loop = false;
-    
-                    video.onended = () => {
-                        playPauseBtn.innerHTML = '&#9658;';
-                        if (managesBgAudio) {
-                            manageBackgroundAudio('resumeAfterVideo');
-                        }
-                    };
-                    video.onplay = () => { playPauseBtn.innerHTML = '&#10074;&#10074;'; };
-                    video.onpause = () => { playPauseBtn.innerHTML = '&#9658;'; };
-    
-                    mediaContainer.appendChild(video);
-                    newMediaElement = video;
-                    playPauseBtn.style.display = 'inline-block';
-                }
-
-                if (isIntraSwitch && newMediaElement) {
-                    newMediaElement.style.transition = 'opacity 0.3s ease-in-out';
-                    newMediaElement.style.opacity = 0;
-                    setTimeout(() => {
-                        newMediaElement.style.opacity = 1;
-                    }, 10);
-                }
-    
-                // Update nav button states
-                intraPrevBtn.disabled = subIdx === 0;
-                intraNextBtn.disabled = subIdx === slideData[slideIdx].media.length - 1;
-                
-                if (slideData[slideIdx].media.length > 1) {
-                    intraPrevBtn.style.display = 'inline-block';
-                    intraNextBtn.style.display = 'inline-block';
-                    intraPrevBtn.style.opacity = intraPrevBtn.disabled ? '0.3' : '1';
-                    intraNextBtn.style.opacity = intraNextBtn.disabled ? '0.3' : '1';
-                } else {
-                    intraPrevBtn.style.display = 'none';
-                    intraNextBtn.style.display = 'none';
-                }
-            };
-
-            if (isIntraSwitch) {
-                const currentMedia = mediaContainer.firstChild;
-                if (currentMedia) {
-                    currentMedia.style.transition = 'opacity 0.3s ease-in-out';
-                    currentMedia.style.opacity = 0;
-                    setTimeout(displayNewMedia, 300);
-                } else {
-                    displayNewMedia();
-                }
+                };
+                video.onplay = () => { playPauseBtn.innerHTML = '&#10074;&#10074;'; };
+                video.onpause = () => { playPauseBtn.innerHTML = '&#9658;'; };
+ 
+                mediaContainer.appendChild(video);
+                playPauseBtn.style.display = 'inline-block';
+            }
+ 
+            // Update nav button states
+            intraPrevBtn.disabled = subIdx === 0;
+            intraNextBtn.disabled = subIdx === slideData[slideIdx].media.length - 1;
+            
+            if (slideData[slideIdx].media.length > 1) {
+                intraPrevBtn.style.display = 'inline-block';
+                intraNextBtn.style.display = 'inline-block';
+                intraPrevBtn.style.opacity = intraPrevBtn.disabled ? '0.3' : '1';
+                intraNextBtn.style.opacity = intraNextBtn.disabled ? '0.3' : '1';
             } else {
-                displayNewMedia();
+                intraPrevBtn.style.display = 'none';
+                intraNextBtn.style.display = 'none';
             }
         }
 
         function intraPrev() {
             if (mediaSubIndex > 0) {
                 mediaSubIndex--;
-                showSubMedia(slideIndex, mediaSubIndex, true);
+                showSubMedia(slideIndex, mediaSubIndex);
             }
         }
 
@@ -1256,7 +1227,7 @@
             const currentSlideData = slideData[slideIndex];
             if (mediaSubIndex < currentSlideData.media.length - 1) {
                 mediaSubIndex++;
-                showSubMedia(slideIndex, mediaSubIndex, true);
+                showSubMedia(slideIndex, mediaSubIndex);
             }
         }
 
